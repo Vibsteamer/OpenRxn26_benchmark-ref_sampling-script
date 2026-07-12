@@ -15,7 +15,7 @@ Geometries are selected from
 - [Transition1x](https://doi.org/10.1038/s41597-022-01870-w). Schreiner *et al.*, *Scientific Data* **9**, 779 (2022).
 - [RGD1](https://doi.org/10.1038/s41597-023-02043-z). Zhao *et al.*, *Scientific Data* **10**, 145 (2023).
 - [BH9](https://doi.org/10.1021/acs.jctc.1c00694). Prasad *et al.*, *Journal of Chemical Theory and Computation* **18**, 151–166 (2022).
-- [Textbook181](https://doi.org/10.31635/ccschem.026.202607339). Li *et al.*, *A Data-Efficient Reactive Machine Learning Potential to Accelerate Automated Exploration of Complex Reaction Networks*, *CCS Chemistry*.
+- [Textbook181](https://doi.org/10.31635/ccschem.026.202607339). Li *et al.*, *A Data-Efficient Reactive Machine Learning Potential to Accelerate Automated Exploration of Complex Reaction Networks*, *CCS Chemistry*, DOI: 10.31635/ccschem.026.202607339 (2026).
 - [cyclo[3+2]](https://doi.org/10.1038/s41597-023-01977-8). Stuyver, Jorner, and Coley, *Scientific Data* **10**, 66 (2023).
 
 ## sampling_scripts
