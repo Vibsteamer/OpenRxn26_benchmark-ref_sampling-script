@@ -1,0 +1,20 @@
+# plumed template, variables in the form V_XXXX will be revised by according to 'revisions' in dpgen2 scripts; 
+# some other parameters will be revised by in-line python funcs in the lammps template;
+
+UNITS LENGTH=A ENERGY=eV TIME=V_TIME_STEP  #Amstroeng, eV (default:hartree), variable in ps;
+RESTART
+
+RMSD REFERENCE=ave.pdb TYPE=OPTIMAL LABEL=rmsd
+
+METAD ...
+ LABEL=metad
+ ARG=rmsd
+ PACE=V_PACE
+ HEIGHT=V_HILL_HEIGHT 
+ SIGMA=V_HILL_SIGMA 
+ FILE=HILLS
+ RESTART=YES
+... METAD
+
+PRINT STRIDE=V_OUTFREQ_PLUMED FILE=COLVAR ARG=rmsd,metad.*
+FLUSH STRIDE=V_OUTFREQ_PLUMED

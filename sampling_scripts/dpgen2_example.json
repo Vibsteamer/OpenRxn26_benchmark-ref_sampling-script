@@ -1,0 +1,323 @@
+{
+    "parallelism": 350,
+    "bohrium_config": {
+        "username": "username",
+        "password": "password",
+        "project_id": "numerical project_id without quote"
+    },
+    "default_step_config": {
+        "template_config": {
+            "image": "registry.dp.tech/dptech/dp/native/prod-384/dpgen2-py310-openabel-util:20250316"
+        },
+        "executor": {
+            "type": "dispatcher",
+            "retry_on_submission_error": 10,
+            "image_pull_policy": "IfNotPresent",
+            "machine_dict": {
+                "batch_type": "Bohrium",
+                "context_type": "Bohrium",
+                "remote_profile": {
+                    "input_data": {
+                        "job_type": "container",
+                        "platform": "ali",
+                        "scass_type": "c32_m128_cpu"
+                    }
+                }
+            }
+        }
+    },
+    "step_configs": {
+        "run_train_config": {
+            "template_config": {
+                "image": "train/image/for/cloud/machine/contanining/deepmd-kit",
+                "envs": {
+                    "DP_INTERFACE_PREC": "low"
+                },
+                "_comment": "all"
+            },
+            "executor": {
+                "type": "dispatcher",
+                "retry_on_submission_error": 10,
+                "image_pull_policy": "IfNotPresent",
+                "machine_dict": {
+                    "batch_type": "Bohrium",
+                    "context_type": "Bohrium",
+                    "remote_profile": {
+                        "input_data": {
+                            "job_type": "container",
+                            "platform": "ali",
+                            "on_demand": 0,
+                            "scass_type": "c12_m92_1 * NVIDIA V100"
+                        }
+                    }
+                }
+            },
+            "_comment": "all"
+        },
+        "run_explore_config": {
+            "template_config": {
+                "image": "explore/image/for/cloud/machine/containing/deepmd-kit/lammps/and/related/packages",
+                "_comment": "all"
+            },
+            "continue_on_success_ratio": 0.7,
+            "_continue_on_success_ratio": 0.8,
+            "executor": {
+                "type": "dispatcher",
+                "retry_on_submission_error": 10,
+                "image_pull_policy": "IfNotPresent",
+                "machine_dict": {
+                    "batch_type": "Bohrium",
+                    "context_type": "Bohrium",
+                    "remote_profile": {
+                        "input_data": {
+                            "job_type": "container",
+                            "platform": "ali",
+                            "on_demand": 0,
+                            "scass_type": "c24_m93_1 * NVIDIA T4"
+                        }
+                    }
+                }
+            },
+            "template_slice_config": {
+                "group_size": 25,
+                "pool_size": 1
+            },
+            "_comment": "all"
+        },
+        "run_fp_config": {
+            "template_config": {
+                "image": "fp_image",
+                "_timeout": 36000,
+                "_comment": "all"
+            },
+            "continue_on_success_ratio": 0.8,
+            "executor": {
+                "type": "dispatcher",
+                "retry_on_submission_error": 10,
+                "image_pull_policy": "IfNotPresent",
+                "machine_dict": {
+                    "batch_type": "Bohrium",
+                    "context_type": "Bohrium",
+                    "remote_profile": {
+                        "input_data": {
+                            "job_type": "container",
+                            "platform": "ali",
+                            "scass_type": "c32_m128_cpu"
+                        }
+                    }
+                }
+            },
+            "template_slice_config": {
+                "group_size": 20,
+                "pool_size": 4
+            },
+            "_comment": "remember to adjust the pool_size"
+        },
+        "_comment": "all"
+    },
+    "upload_python_packages": [
+        "/somewhere/dpdata",
+        "/somewhere/site-packages/dpgen2"
+    ],
+    "inputs": {
+        "type_map": [
+            "H",
+            "C",
+            "N",
+            "O",
+            "F",
+            "P",
+            "S",
+            "Cl"
+        ],
+        "mixed_type": true,
+        "do_finetune": false,
+        "mass_map": [
+            4.0,
+            12.011,
+            14.007,
+            15.999,
+            18.998,
+            30.974,
+            32.06,
+            35.45
+        ],
+        "init_data_uri": "oss://somewhere/somedata.tgz",
+        "init_data_prefix": "./init_data_mixedtype",
+        "init_data_sys": [
+            "somewhere/pretrain.data/../11",
+            "somewhere/pretrain.data/../12"
+        ],
+        "_comment": "pretrain data"
+    },
+    "train": {
+        "type": "dp",
+        "numb_models": 4,
+        "init_models_paths": [
+            "./model_ens/task.0000/model.ckpt.pt",
+            "./model_ens/task.0001/model.ckpt.pt",
+            "./model_ens/task.0002/model.ckpt.pt",
+            "./model_ens/task.0003/model.ckpt.pt"
+        ],
+        "config": {
+            "impl": "pytorch",
+            "init_model_policy": "yes",
+            "init_model_old_ratio": 0.95,
+            "init_model_numb_steps": 400000,
+            "init_model_start_lr": 0.0005,
+            "init_model_start_pref_e": 2,
+            "init_model_start_pref_f": 200,
+            "_comment": "init_model_old_ratio could be adjusted for appropriate training effectiveness"
+        },
+        "template_script": "train_iters_dpa3.json",
+        "_comment": "all"
+    },
+    "explore": {
+        "type": "lmp",
+        "config": {
+            "command": "lmp -var restart 0",
+            "_extra_output_files": [
+                "traj.dump.md_backup",
+                "opt*log",
+                "bond*json",
+                "arc*json"
+            ]
+        },
+        "convergence": {
+            "type": "adaptive-lower",
+            "conv_tolerance": 0.01,
+            "numb_candi_f": 5000,
+            "rate_candi_f": 0.1,
+            "level_f_hi": 1.0,
+            "n_checked_steps": 3,
+            "candi_sel_prob": "inv_pop_f:20",
+            "_comment": "all"
+        },
+        "max_numb_iter": 50,
+        "fatal_at_max": false,
+        "output_nopbc": true,
+        "_comment": "all",
+        "configuration_prefix": null,
+        "configurations": [
+            {
+                "type": "file",
+                "prefix": "./explore_confs/somepath",
+                "files": [
+                    "somewhere/*POSCAR*"
+                ],
+                "fmt": "vasp/poscar",
+                "_comment": "reactant POSCARs, allowing wildcard names"
+            },
+            {
+                "type": "file",
+                "prefix": "./explore_confs/somepath",
+                "files": [
+                    "somewhere/*POSCAR*"
+                ],
+                "fmt": "vasp/poscar",
+                "_comment": "reactant POSCARs, allowing wildcard names"
+            }
+        ],
+        "stages": [
+            [
+                {
+                    "_comment": "plumed.template will be revised in running by python funcs in lammps.template, not the same before and during running",
+                    "type": "lmp-template",
+                    "conf_idx": [
+                        0,
+                        1
+                    ],
+                    "n_sample": 1000,
+                    "trj_freq": 5,
+                    "lmp_template_fname": "lammps_Rxn_template.in",
+                    "plm_template_fname": "input.plumed",
+                    "revisions": {
+                        "V_TEMP": [
+                            300
+                        ],
+                        "V_PACE": [
+                            500
+                        ],
+                        "V_Nrepeats": [
+                            "random:500,500,300,100"
+                        ],
+                        "V_HILL_HEIGHT": [
+                            "random:2.0,3.0,4.0"
+                        ],
+                        "V_HILL_SIGMA": [
+                            "random:0.2,0.3,0.35,0.5"
+                        ],
+                        "V_EXPECT_NUMB_REACT_INSTANCE": [
+                           4.5
+                        ],
+                        "V_HARMONIC_THICKNESS": [
+                            6
+                        ],
+                        "V_HARMONIC_FACTOR": [
+                            10
+                        ],
+                        "V_TIME_STEP": [
+                            0.001
+                        ],
+                        "V_MASS_HYDROGEN": [
+                            8.0
+                        ],
+                        "V_OUTFREQ_PLUMED": [
+                            5
+                        ],
+                        "V_LOCAL_RCUT": [
+                            2.1,
+                            4.5,
+                            10.0
+                        ],
+                        "V_SECURE_SINGLE_ATOM_RCUT": [
+                            3.5
+                        ],
+                        "V_DROP_HYDROGEN_RCUT_LARGERTHAN": [
+                            2.0
+                        ]
+                    }
+                }
+            ]
+        ],
+        "filters": [
+            {
+                "type": "distance",
+                "custom_safe_dist": {
+                    "H": 0.699,
+                    "C": 1.134,
+                    "N": 1.04,
+                    "O": 0.964,
+                    "F": 1.04,
+                    "P": 1.777,
+                    "S": 1.72,
+                    "Cl": 1.701
+                },
+                "safe_dist_ratio": 1.08
+            }
+        ]
+    },
+    "fp": {
+        "type": "gaussian",
+        "task_max": 8000,
+        "inputs_config": {
+            "keywords": [
+                "P wb97xd/6-31G** scf(MaxConventionalCycles=64,MaxCycles=128) nosymm stable=(opt,xqc)",
+                "P wb97xd/6-31G** nosymm guess=read geom=check force"
+            ],
+            "multiplicity": "auto",
+            "charge": 0,
+            "nproc": 4,
+            "_comment": "use two step --link1-- to avoid the conflict of stable=opt and force in gaussian16"
+        },
+        "run_config": {
+            "command": "ulimit -s unlimited && export 'xxxxxx' && source xxxxx && xxxxx",
+            "_post_command": "yyyyyyyyyyyy",
+            "_command": "all"
+        },
+        "_extra_output_files": [
+            "*.somefiles"
+        ],
+        "_comment": "all"
+    }
+}
