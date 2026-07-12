@@ -8,6 +8,7 @@ The DPA3_rxn model is available through AIS Square: public after manuscript on a
 ## benchmark_reference
 
 Introduction please see [benchmark_reference/README.md](benchmark_reference/README.md).
+
 Geometries are selected from
 
 - [OMol25](https://doi.org/10.48550/arXiv.2505.08762). Levine *et al.*, *The Open Molecules 2025 (OMol25) Dataset, Evaluations, and Models*, arXiv:2505.08762 (2025).
@@ -20,4 +21,5 @@ Geometries are selected from
 ## sampling_scripts
 
 Introduction please see [sampling_scripts/README.md](sampling_scripts/README.md).
-The exploration workflow is orchestrated by [DPGEN2](https://github.com/deepmodeling/dpgen2), with [LAMMPS](https://doi.org/10.1016/j.cpc.2021.108171) and [PLUMED](https://doi.org/10.1016/j.cpc.2013.09.018) used for simulation, [ASE](https://wiki.fysik.dtu.dk/ase/) for TS optimization, [DeepMD-kit](https://github.com/deepmodeling/deepmd-kit) for potential-energy surface.
+
+The exploration workflow is orchestrated by [DPGEN2](https://github.com/deepmodeling/dpgen2), invoking [DeepMD-kit](https://github.com/deepmodeling/deepmd-kit), [LAMMPS](https://doi.org/10.1016/j.cpc.2021.108171), [PLUMED](https://doi.org/10.1016/j.cpc.2013.09.018), [ASE](https://wiki.fysik.dtu.dk/ase/) and [MDAnalysis](https://www.mdanalysis.org/). 
