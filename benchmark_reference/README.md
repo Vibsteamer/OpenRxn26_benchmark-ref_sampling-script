@@ -110,7 +110,7 @@ static_evaluation/
 └── domain-specific_testsets/
     ├── label_OpenRxn26/
     │   ├── BH9_42/
-    │   ├── textbook100/
+    │   ├── Textbook181_100/
     │   └── cyclo3_2_400/
     ├── label_MDCD20/
     ├── label_OMol25/
@@ -118,7 +118,7 @@ static_evaluation/
     └── label_ANI-1xBB/
 ```
 
-Geometries are selected from `Transition1x`, `RGD1`, `BH9`, `textbook100`, and `cyclo[3+2]` datasets, and single-point labels are re-calculated using five labeling methods respectively adopted by `OpenRxn26`, `MDCD20`, `OMol25`, `transition1x`, and `ANI-1xBB`. 
+Geometries are selected from `Transition1x`, `RGD1`, `BH9`, `Textbook181`, and `cyclo[3+2]` datasets, and single-point labels are re-calculated using five labeling methods respectively adopted by `OpenRxn26`, `MDCD20`, `OMol25`, `transition1x`, and `ANI-1xBB`. 
 
 ### custom metainfo file
 
