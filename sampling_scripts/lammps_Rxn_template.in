@@ -19,7 +19,7 @@ variable        NUM_LOCAL_DIVISIONS python distinguish_local_global
 
 
 units           metal
-boundary        p p p 
+boundary        f f f 
 atom_style      atomic
 
 neighbor        2.0 bin

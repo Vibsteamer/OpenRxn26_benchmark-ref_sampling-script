@@ -51,9 +51,9 @@ tSNE-ID-OOD_test/
 ├── OpenRxn26_tSNE-20x_random300/
 ├── OpenRxn26_tSNE-20x_random300_relabel-OMol25/
 ├── OMol25_tSNE-20x-NheavyLe30_random300/
-├── OMol25_tSNE-20x-NheavyLe30_random300_relable-OpenRxn26/
+├── OMol25_tSNE-20x-NheavyLe30_random300_relabel-OpenRxn26/
 ├── OMol25_tSNE-20x-NheavyGt30_random300/
-└── OMol25_tSNE-20x-NheavyGt30_random300_relable-OpenRxn26/
+└── OMol25_tSNE-20x-NheavyGt30_random300_relabel-OpenRxn26/
 ```
 
 `OpenRxn26_tSNE_random100K`: 100,000 random frames from OpenRxn26 used as the
@@ -83,7 +83,7 @@ Other directories initialized with `OMol25_` are from OMol25 with similar select
 static_evaluation/
 ├── general_testsets/
 │   └── label_OpenRxn26/
-│       ├── Transition1x_2000/
+│       ├── Transition1x_1900/
 │       │   ├── ID/
 │       │   │   ├── reactant/
 │       │   │   │   └── rxnkilo_000000/
@@ -98,20 +98,18 @@ static_evaluation/
 │       │   │   │               ├── force.npy
 │       │   │   │               ├── fparam.npy
 │       │   │   │               ├── real_atom_types.npy
-│       │   │   │               ├── rxn.npy
-│       │   │   │               ├── formula.npy
-│       │   │   │               └── T1X_idx.npy
+│       │   │   │               └── rxn.npy
 │       │   │   ├── ts/
 │       │   │   └── product/
 │       │   └── OOD_SMILES/
-│       └── RGD1_2000/
+│       └── RGD1_1800/
 │           ├── Nheavy3-7/
 │           └── Nheavy8-10/
 └── domain-specific_testsets/
     ├── label_OpenRxn26/
     │   ├── BH9_42/
     │   ├── Textbook181_100/
-    │   └── cyclo3_2_400/
+    │   └── cyclo3_2_350/
     ├── label_MDCD20/
     ├── label_OMol25/
     ├── label_transition1x/
@@ -128,8 +126,8 @@ Geometries are selected from `Transition1x`, `RGD1`, `BH9`, `Textbook181`, and `
 | `rxn.npy` | per-frame reaction identifier used to align `reactant`, `ts`, and `product` from the same reaction | `(N,)` or `(N, 1)` |
 
 
-Except for `cyclo3_2_400`, reactant, TS, and product frames from the same reaction use the same identifier recorded in rxn.npy, such as `MR_149431_0` or `02_140`.
-`cyclo3_2_400` uses the following matching rule in `rxn.npy`:
+Except for `cyclo3_2_350`, reactant, TS, and product frames from the same reaction use the same identifier recorded in rxn.npy, such as `MR_149431_0` or `02_140`.
+`cyclo3_2_350` uses the following matching rule in `rxn.npy`:
 
 ```text
 two reactants:   <this_id>_0 and <this_id>_1
@@ -137,46 +135,58 @@ TS:              <this_id>
 product:         <this_id>_0
 ```
 
-Some reactions missing reference data for specific states due to failed DFT calculations under particular labeling methods.
-
 ## reactive_traj
 
-`reactive_traj/` contains reference data of RXNPath_39.
-Energies and forces of the same set of geometries are calculated using 5 DFT methods, respectively in line with `OpenRxn26`, `MDCD20`, `OMol25`, `transition1x`, and `ANI-1xBB`.
+`reactive_traj/` contains the reference data of `RXNPath_39` and two variants `RXNPath_39_sampled_by_MDCD-NN` and `RXNPath_39_sampled_by_MACE_OMol25`.
+`RXNPath_39/` serves as the main benchmark data set in the manuscript, containing geometries sampled on the PES of `DPA3_rxn`. 
+The other two supplementary variants are respectively sampled on the PES of `MDCD-NN` and the PES of `MACE_OMol25`.
+
+Within each dataset, energies and forces of the same geometries are calculated using 5 DFT methods, respectively in line with `OpenRxn26`, `MDCD20`, `OMol25`, `transition1x`, and `ANI-1xBB`.
 
 ### directory structure
 
 ```text
 reactive_traj/
-└── RXNPath_39/
-    ├── label_OpenRxn26/
-    │   └── <number_of_atoms>/
-    │       ├── type.raw
-    │       ├── type_map.raw
-    │       ├── nopbc
-    │       └── set.000/
-    │           ├── box.npy
-    │           ├── coord.npy
-    │           ├── energy.npy
-    │           ├── force.npy
-    │           ├── fparam.npy
-    │           ├── real_atom_types.npy
-    │           └── metainfo.npy
-    ├── label_MDCD20/
-    ├── label_OMol25/
-    ├── label_transition1x/
-    └── label_ANI-1xBB/
+├── RXNPath_39/
+│   ├── label_OpenRxn26/
+│   │   └── <number_of_atoms>/
+│   │       ├── type.raw
+│   │       ├── type_map.raw
+│   │       ├── nopbc
+│   │       └── set.000/
+│   │           ├── box.npy
+│   │           ├── coord.npy
+│   │           ├── energy.npy
+│   │           ├── force.npy
+│   │           ├── fparam.npy
+│   │           ├── real_atom_types.npy
+│   │           └── metainfo.npy
+│   ├── label_MDCD20/
+│   ├── label_OMol25/
+│   ├── label_transition1x/
+│   └── label_ANI-1xBB/
+├── RXNPath_39_sampled_by_MDCD-NN/
+└── RXNPath_39_sampled_by_MACE_OMol25/
 ```
+
+All three dataset directories use the same label structure.
 
 ### custom metainfo file
 
 
 | file           | contents                                                                                                                                                                                                                                                                                                                                                                                                              | shape and example                                           |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| `metainfo.npy` | provenance and position of each frame: `reaction_id`, `traj_idx` (0-2), `point_idx`: idx among the selected frames from the same traj (0-10), `target_progress_idx`: idx of the nearest equal-interval grid along the projected arc (0-10), `frame_progress`: progress value of the frame along the projected arc, `target_progress_value`: progress value of the nearest equal-interval grid along the projected arc | `(N,)`, `[('19__rxn060', 0, 4, 4, 2.98075905, 2.92296068)]` |
+| `metainfo.npy` | provenance and position of each frame: `reaction_id`, `traj_idx` (0-2), `point_idx`: idx among the selected frames from the same traj (0-10), `target_progress_idx`: idx of the nearest equal-interval grid along the projected arc (0-10), `frame_progress`: progress value of the frame along the projected arc, `target_progress_value`: progress value of the nearest equal-interval grid along the projected arc | `(N,)`, `[('19__rxn060', 0, 4, 4, 2.44548423, 2.43919245)]` |
 
 
 The projected arc is the trajectory projected into the space of bond-changing interatomic distances; the cumulative arc length along this arc defines the progress values.
+
+`traj_idx` is local to one sampler directory. When matching the same frame
+across DFT labels, use
+`(reaction_id, traj_idx, target_progress_idx, point_idx)` from
+`metainfo.npy`; row order can differ between label directories. Because these
+are nonperiodic data marked by `nopbc`, `box.npy` is a nonphysical placeholder
+and may differ between DFT-labeling pipelines.
 
 ## label_scripts_example
 
