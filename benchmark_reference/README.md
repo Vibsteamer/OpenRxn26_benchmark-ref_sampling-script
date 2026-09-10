@@ -113,10 +113,11 @@ static_evaluation/
     ├── label_MDCD20/
     ├── label_OMol25/
     ├── label_transition1x/
-    └── label_ANI-1xBB/
+    ├── label_ANI-1xBB/
+    └── label_AIMNet2-rxn/
 ```
 
-Geometries are selected from `Transition1x`, `RGD1`, `BH9`, `Textbook181`, and `cyclo[3+2]` datasets, and single-point labels are re-calculated using five labeling methods respectively adopted by `OpenRxn26`, `MDCD20`, `OMol25`, `transition1x`, and `ANI-1xBB`. 
+Geometries are selected from `Transition1x`, `RGD1`, `BH9`, `Textbook181`, and `cyclo[3+2]` datasets, and single-point labels are re-calculated using six labeling methods respectively adopted by `OpenRxn26`, `MDCD20`, `OMol25`, `transition1x`, `ANI-1xBB`, and `AIMNet2-rxn`.
 
 ### custom metainfo file
 
@@ -141,7 +142,7 @@ product:         <this_id>_0
 `RXNPath_39/` serves as the main benchmark data set in the manuscript, containing geometries sampled on the PES of `DPA3_rxn`. 
 The other two supplementary variants are respectively sampled on the PES of `MDCD-NN` and the PES of `MACE_OMol25`.
 
-Within each dataset, energies and forces of the same geometries are calculated using 5 DFT methods, respectively in line with `OpenRxn26`, `MDCD20`, `OMol25`, `transition1x`, and `ANI-1xBB`.
+Within each dataset, energies and forces of the same geometries are calculated using 6 DFT methods, respectively in line with `OpenRxn26`, `MDCD20`, `OMol25`, `transition1x`, `ANI-1xBB`, and `AIMNet2-rxn`.
 
 ### directory structure
 
@@ -164,7 +165,8 @@ reactive_traj/
 │   ├── label_MDCD20/
 │   ├── label_OMol25/
 │   ├── label_transition1x/
-│   └── label_ANI-1xBB/
+│   ├── label_ANI-1xBB/
+│   └── label_AIMNet2-rxn/
 ├── RXNPath_39_sampled_by_MDCD-NN/
 └── RXNPath_39_sampled_by_MACE_OMol25/
 ```
@@ -198,6 +200,7 @@ label_scripts_example/
 ├── MDCD20_ORCA.inp
 ├── OMol25_ORCA.inp
 ├── transition1x_ORCA.inp
-└── ANI-1xBB_ORCA.inp
+├── ANI-1xBB_ORCA.inp
+└── AIMNet2-rxn_ORCA.inp
 ```
 
