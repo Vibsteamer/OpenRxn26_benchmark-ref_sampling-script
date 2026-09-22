@@ -117,7 +117,9 @@ static_evaluation/
     └── label_AIMNet2-rxn/
 ```
 
-Geometries are selected from `Transition1x`, `RGD1`, `BH9`, `Textbook181`, and `cyclo[3+2]` datasets, and single-point labels are re-calculated using six labeling methods respectively adopted by `OpenRxn26`, `MDCD20`, `OMol25`, `transition1x`, `ANI-1xBB`, and `AIMNet2-rxn`.
+Geometries are selected from `Transition1x`, `RGD1`, `BH9`, `Textbook181`, and `cyclo[3+2]` datasets.
+Single-point labels of `general_testsets` are re-calculated using the DFT labeling methods adopted by `OpenRxn26`.
+Single-point labels of `domain-specific_testsets` are re-calculated using DFT labeling methods respectively adopted by `OpenRxn26`, `MDCD20`, `OMol25`, `AIMNet2-rxn`, `transition1x` and `ANI-1xBB`.
 
 ### custom metainfo file
 
