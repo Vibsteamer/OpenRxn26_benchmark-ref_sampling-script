@@ -1,6 +1,6 @@
 # OpenRxn26 benchmark data and sampling scripts
 
-This repository provides benchmark reference data in manuscript [A System-Independent Metadynamics Strategy for Reactive Training Data: Application to Gas-Phase Organic Reactions](https://arxiv.org/abs/2609.29105) and the sampling scripts used to produce the OpenRxn26 dataset.
+This repository provides benchmark reference data in manuscript [https://arxiv.org/abs/2609.29105](https://arxiv.org/abs/2609.29105) and the sampling scripts used to produce the OpenRxn26 dataset.
 
 The OpenRxn26 dataset is available from AIS Square: [https://www.aissquare.com/datasets/detail?pageType=datasets&name=OpenRxn26&id=425](https://www.aissquare.com/datasets/detail?pageType=datasets&name=OpenRxn26&id=425). The DPA3_rxn model is available from AIS Square: [https://www.aissquare.com/models/detail?pageType=models&name=DPA3_rxn&id=441](https://www.aissquare.com/models/detail?pageType=models&name=DPA3_rxn&id=441).
 
