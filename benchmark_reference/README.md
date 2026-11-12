@@ -109,7 +109,7 @@ static_evaluation/
     ├── label_OpenRxn26/
     │   ├── BH9_42/
     │   ├── Textbook181_100/
-    │   └── cyclo3_2_350/
+    │   └── cyclo3_2_335/
     ├── label_MDCD20/
     ├── label_OMol25/
     ├── label_transition1x/
@@ -129,8 +129,8 @@ Single-point labels of `domain-specific_testsets` are re-calculated using DFT la
 | `rxn.npy` | per-frame reaction identifier used to align `reactant`, `ts`, and `product` from the same reaction | `(N,)` or `(N, 1)` |
 
 
-Except for `cyclo3_2_350`, reactant, TS, and product frames from the same reaction use the same identifier recorded in rxn.npy, such as `MR_149431_0` or `02_140`.
-`cyclo3_2_350` uses the following matching rule in `rxn.npy`:
+Except for `cyclo3_2_335`, reactant, TS, and product frames from the same reaction use the same identifier recorded in rxn.npy, such as `MR_149431_0` or `02_140`.
+`cyclo3_2_335` uses the following matching rule in `rxn.npy`:
 
 ```text
 two reactants:   <this_id>_0 and <this_id>_1
@@ -141,7 +141,7 @@ product:         <this_id>_0
 ## reactive_traj
 
 `reactive_traj/` contains the reference data of `RXNPath_39` and two variants `RXNPath_39_sampled_by_MDCD-NN` and `RXNPath_39_sampled_by_MACE_OMol25`.
-`RXNPath_39/` serves as the main benchmark data set in the manuscript, containing geometries sampled on the PES of `DPA3_rxn`. 
+`RXNPath_39/` serves as the main benchmark data set in the manuscript, containing geometries sampled on the PES of `DPA4_rxn26`. 
 The other two supplementary variants are respectively sampled on the PES of `MDCD-NN` and the PES of `MACE_OMol25`.
 
 Within each dataset, energies and forces of the same geometries are calculated using 6 DFT methods, respectively in line with `OpenRxn26`, `MDCD20`, `OMol25`, `transition1x`, `ANI-1xBB`, and `AIMNet2-rxn`.
