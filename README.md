@@ -1,6 +1,6 @@
 # OpenRxn26 benchmark data and sampling scripts
 
-This repository provides benchmark reference data in manuscript [https://arxiv.org/abs/2609.29105v2](https://arxiv.org/abs/2609.29105v2) (awaiting online) and the sampling scripts used to produce the OpenRxn26 dataset.
+This repository provides benchmark reference data in manuscript [https://arxiv.org/abs/2609.29105v2](https://arxiv.org/abs/2609.29105v2) and the sampling scripts used to produce the OpenRxn26 dataset.
 
 The OpenRxn26 dataset is available from AIS Square: [https://www.aissquare.com/datasets/detail?pageType=datasets&name=OpenRxn26&id=425](https://www.aissquare.com/datasets/detail?pageType=datasets&name=OpenRxn26&id=425). 
 
